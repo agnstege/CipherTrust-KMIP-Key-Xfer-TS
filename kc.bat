@@ -1,6 +1,5 @@
 REM
 REM kc.py KMIP Key Transfer batch file with values
 REM
-copy /b T_CA*.pem TrustedCAs.pem
-py kc.py -srcHost gde-sun.test256.io -srcUser kmip_alice -srcPass Thales123! -dstHost cm-spock.test256.io -dstUser kmip_bob -dstPass Thales234! -clientCert kmip_client.crt -clientKey kmip_client.key -trustedCAs TrustedCAs.pem
+py kc.py -srcHost 192.168.50.100 -srcUser mary_kmip_test -srcPass Thales123! -dstHost 192.168.50.200 -dstUser tony_kmip_test -dstPass Thales123! -srcclientCert cert100.pem -srcclientKey key100.pem -srcCAs ca-100.txt -dstclientCert cert200.pem -dstclientKey key200.pem -dstCAs ca-200.txt 
 
