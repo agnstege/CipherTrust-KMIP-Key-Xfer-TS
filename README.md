@@ -29,10 +29,12 @@ d) The communication between the python code host(CH) and the srcHost(100) and d
       1.1)generate a sign request + key for srcHost 
 
       openssl req -newkey rsa:2048 -keyout key100.pem -out req100.pem -outform PEM
+      **remember to use srcHost user as CN field
 
       1.2)generate a sign request + key for dstHost
 
       openssl req -newkey rsa:2048 -keyout key200.pem -out req200.pem -outform PEM
+      **remember to use dstHost user as CN field
 
       1.3)
 
