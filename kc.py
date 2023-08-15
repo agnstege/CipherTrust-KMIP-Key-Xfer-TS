@@ -6,7 +6,8 @@
 #
 #   Usage: py kc.py -srcHost <hostname or IP> -srcUser <username> -srcPass <password> 
 #                   -dstHost <hostname or IP> -dstUser <username> -dstPass <password> 
-#                   -clientCert CLIENTCERT -clientKey CLIENTKEY -trustedCAs TRUSTEDCAS
+#                   -srcclientCert SRCCLIENTCERT -srcclientKey SRCCLIENTKEY -srcCAs SRCTRUSTEDCAS
+#                   -dstclientCert DSTCLIENTCERT -dstclientKey DSTCLIENTKEY -dstCAs DSTTRUSTEDCAS
 #
 #####################################################################################
 
@@ -60,13 +61,23 @@ parser.add_argument("-dstPass", nargs=1, action="store", dest="dstPass", require
 
 # Client Certificate Information
 parser.add_argument(
-    "-clientCert", nargs=1, action="store", dest="clientCert", required=True
+    "-srcclientCert", nargs=1, action="store", dest="srcclientCert", required=True
 )
 parser.add_argument(
-    "-clientKey", nargs=1, action="store", dest="clientKey", required=True
+    "-srcclientKey", nargs=1, action="store", dest="srcclientKey", required=True
 )
 parser.add_argument(
-    "-trustedCAs", nargs=1, action="store", dest="trustedCAs", required=True
+    "-srcCAs", nargs=1, action="store", dest="srcCAs", required=True
+)
+# Client Certificate Information
+parser.add_argument(
+    "-dstclientCert", nargs=1, action="store", dest="dstclientCert", required=True
+)
+parser.add_argument(
+    "-dstclientKey", nargs=1, action="store", dest="dstclientKey", required=True
+)
+parser.add_argument(
+    "-dstCAs", nargs=1, action="store", dest="dstCAs", required=True
 )
 
 args = parser.parse_args()
@@ -81,14 +92,20 @@ t_dstPort = str(" ".join(args.dstPort))
 t_dstUser = str(" ".join(args.dstUser))
 t_dstPass = str(" ".join(args.dstPass))
 
-t_clientCert = str(" ".join(args.clientCert))
-t_clientKey = str(" ".join(args.clientKey))
-t_trustedCAs = str(" ".join(args.trustedCAs))
+t_srcclientCert = str(" ".join(args.srcclientCert))
+t_srcclientKey = str(" ".join(args.srcclientKey))
+t_srcCAs = str(" ".join(args.srcCAs))
+
+t_dstclientCert = str(" ".join(args.dstclientCert))
+t_dstclientKey = str(" ".join(args.dstclientKey))
+t_dstCAs = str(" ".join(args.dstCAs))
+
 
 print("\n ---- INPUT STATS: ----")
 print("Source: ", t_srcHost, t_srcPort, t_srcUser)
 print("  Dest: ", t_dstHost, t_dstPort, t_dstUser)
-print("Client: ", t_clientCert, t_clientKey, t_trustedCAs)
+print("srcClient: ", t_srcclientCert, t_srcclientKey, t_srcCAs)
+print("dstClient: ", t_dstclientCert, t_dstclientKey, t_dstCAs)
 
 # ---- Parsing Complete ----------------------------------------------------------
 
@@ -98,9 +115,9 @@ keySource = client.ProxyKmipClient(
     port=t_srcPort,
     username=t_srcUser,
     password=t_srcPass,
-    cert=t_clientCert,
-    key=t_clientKey,
-    ca=t_trustedCAs,
+    cert=t_srcclientCert,
+    key=t_srcclientKey,
+    ca=t_srcCAs,
     # cert_reqs=ssl.CERT_OPTIONAL, # no longer supported although you may see this in the default pykmip.conf file, if used.
     ssl_version="PROTOCOL_TLSv1_2",
     config="client",
@@ -114,9 +131,9 @@ keyDest = client.ProxyKmipClient(
     port=t_dstPort,
     username=t_dstUser,
     password=t_dstPass,
-    cert=t_clientCert,
-    key=t_clientKey,
-    ca=t_trustedCAs,
+    cert=t_dstclientCert,
+    key=t_dstclientKey,
+    ca=t_dstCAs,
     # cert_reqs=ssl.CERT_OPTIONAL, # no longer supported although you may see this in the default pykmip.conf file, if used.
     ssl_version="PROTOCOL_TLSv1_2",
     config="client",
