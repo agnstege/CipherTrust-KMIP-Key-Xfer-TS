@@ -36,9 +36,11 @@ d) The communication between the python code host(CH) and the srcHost(100) and d
       openssl req -newkey rsa:2048 -keyout key200.pem -out req200.pem -outform PEM
       **remember to use dstHost user as CN field
 
-      1.3)
+      1.3)sign the req100.pem with the srcHost and copy the resulting signed certificate to (CH) as cert100.pem
 
-      
+      1.4)sign the req200.pem with the dstHost and copy the resulting signed certificate to (CH) as cert200.pem 
+
+      1.5)update/confirm the settings in kc.sh       
 
 
 e) The KMIP library comes from PYKMIP.  You can find their documentation here: https://pykmip.readthedocs.io/en/latest/client.html
