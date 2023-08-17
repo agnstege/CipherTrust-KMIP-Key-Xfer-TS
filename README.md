@@ -8,7 +8,7 @@ All other files are supporting files (especially any .crt, .pem, or .key files)
 
 kc.bat and kc.sh have also been created to simplify execution of the application and include all of the paramters.
 
-   Usage: py kc.py -srcHost <hostname or IP> -srcUser <username> -srcPass <password>
+   Usage: py kc.py -srcHost <hostname or IP>
                    -dstHost <hostname or IP> -dstUser <username> -dstPass <password>
                    -srcclientCert SRCCLIENTCERT -srcclientKey SRCCLIENTKEY -srcCAs SRCTRUSTEDCAS
                    -dstclientCert DSTCLIENTCERT -dstclientKey DSTCLIENTKEY -dstCAs DSTTRUSTEDCAS
@@ -17,19 +17,14 @@ kc.bat and kc.sh have also been created to simplify execution of the application
                   
 Notes:  
 
-a) The source user (srcUser) must be the OWNER of the KMIP keys that are to be exported
+a) The destination user (dstUser) must be a member of the KEY USERS administrative group.
 
-b) The distination user (dstUser) must be a member of the KEY USERS administrative group.
+b) The keys that are to be exported via the KMIP interface from the source host (srcHost) must be EXPORTABLE (check flag)
 
-c) The keys that are to be exported via the KMIP interface from the source host (srcHost) must be EXPORTABLE (check flag)
-
-d) The communication between the python code host(CH) and the srcHost(100) and dsthost(200) relies on certificates.
+c) The communication between the python code host(CH) and the srcHost(100) and dsthost(200) relies on certificates.
    1) on (CH)
 
-      1.1)generate a sign request + key for srcHost 
-
-      openssl req -newkey rsa:2048 -keyout key100.pem -out req100.pem -outform PEM
-      **remember to use srcHost user as CN field
+      1.1)Depends on the use case 
 
       1.2)generate a sign request + key for dstHost
 
@@ -43,8 +38,8 @@ d) The communication between the python code host(CH) and the srcHost(100) and d
       1.5)update/confirm the settings in kc.sh       
 
 
-e) The KMIP library comes from PYKMIP.  You can find their documentation here: https://pykmip.readthedocs.io/en/latest/client.html
+d) The KMIP library comes from PYKMIP.  You can find their documentation here: https://pykmip.readthedocs.io/en/latest/client.html
 
-f) Opensource informaton for PyKMIP can be found here:  https://github.com/OpenKMIP/PyKMIP
+e) Opensource informaton for PyKMIP can be found here:  https://github.com/OpenKMIP/PyKMIP
 
 
